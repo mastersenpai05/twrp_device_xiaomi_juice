@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2019 The TwrpBuilder Open-Source Project
+# Copyright (C) 2020 Team Win Recovery Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,6 +15,6 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/omni_surya.mk
+    $(LOCAL_DIR)/omni_citrus.mk
 
-COMMON_LUNCH_CHOICES := omni_surya-eng
+COMMON_LUNCH_CHOICES := omni_citrus-eng
