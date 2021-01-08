@@ -1,4 +1,3 @@
 persist.sys.isUsbOtgEnabled=true
 vendor.gatekeeper.disable_spu=true
 ro.adb.secure=0
-fbe.metadata.wrappedkey=true
