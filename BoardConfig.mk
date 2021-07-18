@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-DEVICE_PATH := device/poco/citrus
+DEVICE_PATH := device/xiaomi/juice
 
 # Architecture
 TARGET_ARCH := arm64
