@@ -21,10 +21,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
 # Inherit from our custom product configuration
 $(call inherit-product, vendor/omni/config/common.mk)
 
-# Inherit from citrus
-$(call inherit-product, device/xiaomi/juice/device.mk)
-
-## Device identifier. This must come after all inclusions
+# Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := juice
 PRODUCT_NAME := omni_juice
 PRODUCT_BRAND := xiaomi
