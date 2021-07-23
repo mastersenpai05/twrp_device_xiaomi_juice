@@ -1,5 +1,5 @@
 ## TWRP DEVICE TREE
-=================
+
 Devices Supported
 =================
 - Citrus
