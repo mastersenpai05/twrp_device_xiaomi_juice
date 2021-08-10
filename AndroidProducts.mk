@@ -15,6 +15,6 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/omni_juice.mk
+    $(LOCAL_DIR)/twrp_juice.mk
 
-COMMON_LUNCH_CHOICES := omni_juice-eng
+COMMON_LUNCH_CHOICES := twrp_juice-eng
