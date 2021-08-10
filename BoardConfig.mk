@@ -123,7 +123,7 @@ TARGET_COPY_OUT_VENDOR := vendor
 
 # Recovery
 BOARD_HAS_LARGE_FILESYSTEM := true
-TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/etc/recovery.fstab
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery.fstab
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
 
 # Crypto
