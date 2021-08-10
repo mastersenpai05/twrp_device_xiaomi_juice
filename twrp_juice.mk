@@ -30,7 +30,7 @@ PRODUCT_MANUFACTURER := Xiaomi
 
 # Define  Dynamic Partitions
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
-PRODUCT_TARGET_VNDK_VERSION := 29
+PRODUCT_TARGET_VNDK_VERSION := 30
 PRODUCT_SHIPPING_API_LEVEL := 29
 
 PRODUCT_COPY_FILES += $(call find-copy-subdir-files,*,$(LOCAL_PATH)/recovery/root,recovery/root) \
