@@ -32,8 +32,6 @@ on fs
 on init
     setprop crypto.ready 1
     install_keyring
-    
-on init
     wait /dev/qseecom
     start qseecomd
 
