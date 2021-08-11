@@ -1,4 +1,4 @@
-# Copyright (c) 2018-2019 The Linux Foundation. All rights reserved.
+# Copyright (c) 2018-2020 The Linux Foundation. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted (subject to the limitations in the
@@ -34,16 +34,11 @@
 # The filesystem that contains the filesystem checker binary (typically /system) cannot
 # specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
 
-#<src>                                                 <mnt_point>            <type>  <mnt_flags and options>                                                                       <fs_mgr_flags>
-# Logical partitions
-system                                                  /system                ext4    ro,barrier=1,discard                                                                          wait
-product                                                 /product               ext4    ro,barrier=1,discard                                                                          wait
-vendor                                                  /vendor                ext4    ro,barrier=1,discard                                                                          wait
+#<src>                                                 <mnt_point>            <type>  <mnt_flags and options>                            <fs_mgr_flags>
+system                                                  /system                  ext4    ro,barrier=1,discard                                 wait,logical,first_stage_mount,avb=vbmeta_system,avb_keys=/avb/q-gsi.avbpubkey:/avb/r-gsi.avbpubkey:/avb/s-gsi.avbpubkey
+system_ext                                              /system_ext              ext4    ro,barrier=1,discard                                 wait,logical,first_stage_mount,avb=vbmeta_system
+product                                                 /product                 ext4    ro,barrier=1,discard                                 wait,logical,first_stage_mount,avb=vbmeta_system
+vendor                                                  /vendor                  ext4    ro,barrier=1,discard                                 wait,logical,first_stage_mount,avb
 
-# Userdata partition
-/dev/block/bootdevice/by-name/userdata                  /data                  f2fs    noatime,nosuid,nodev,discard,reserve_root=32768,resgid=1065,fsync_mode=nobarrier              wait,check,formattable,fileencryption=ice:aes-256-cts,keydirectory=/metadata/vold/metadata_encryption
-
-# Need to have this entry in here even though the mount point itself is no longer needed.
-# The update_engine code looks for this entry in order to determine the boot device address
-# and fails if it does not find it.
-/dev/block/bootdevice/by-name/misc                      /misc                  emmc    defaults                                                                                      defaults
+/dev/block/bootdevice/by-name/userdata                  /data                    f2fs    noatime,nosuid,nodev,discard,reserve_root=32768,resgid=1065,fsync_mode=nobarrier,inlinecrypt     latemount,wait,check,formattable,fileencryption=ice,wrappedkey,quota,reservedsize=128M,checkpoint=fs
+/dev/block/bootdevice/by-name/misc                      /misc                  emmc    defaults                                             defaults
