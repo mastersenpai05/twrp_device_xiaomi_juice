@@ -6,3 +6,5 @@
 /recovery           emmc      /dev/block/bootdevice/by-name/recovery                                flags=display="Recovery";backup=1;flashimg=1;
 /cust               ext4      /dev/block/bootdevice/by-name/cust                                    flags=display="Cust";
 /cust_image         emmc      /dev/block/bootdevice/by-name/cust                                    flags=display="Cust image";backup=1;flashimg=1;
+/usb_otg	vfat    /dev/block/sdg1       									/dev/block/sdg		flags=fsflags=utf8;display="USB-OTG";storage;removable
+/external_sd	vfat    /dev/block/mmcblk0p1  									/dev/block/mmcblk0	flags=display="MicroSD";storage;removable
