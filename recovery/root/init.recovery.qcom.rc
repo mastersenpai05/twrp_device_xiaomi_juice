@@ -63,20 +63,21 @@ service unified-script /system/bin/unified-script.sh
 service gatekeeper-1-0 /system/bin/android.hardware.gatekeeper@1.0-service-qti
     user root
     group root
-    setenv LD_LIBRARY_PATH /vendor/lib64:/system/lib64
+    setenv LD_LIBRARY_PATH /vendor/lib64
     disabled
     seclabel u:r:recovery:s0
 
 service keymaster-4-0 /system/bin/android.hardware.keymaster@4.0-service-qti
     user root
     group root
-    setenv LD_LIBRARY_PATH /vendor/lib64:/system/lib64
+    setenv LD_LIBRARY_PATH /vendor/lib64
     disabled
     seclabel u:r:recovery:s0
     
 service qseecomd /system/bin/qseecomd
     user root
     group root
+    setenv LD_LIBRARY_PATH /vendor/lib64
     shutdown critical
     seclabel u:r:recovery:s0
     
