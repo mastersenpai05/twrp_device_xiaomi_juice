@@ -36,8 +36,7 @@ on init
     start qseecomd
 
 service keystore_auth /system/bin/keystore_auth
-    oneshot
-    user system
+    user root
     group root
     disabled
     seclabel u:r:recovery:s0
