@@ -28,12 +28,14 @@
 on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
-
-on init
     setprop crypto.ready 1
     install_keyring
+
+on init
     wait /dev/qseecom
-    start qseecomd
+    start vendor.qseecomd
+    start servicemanager
+    start hwservicemanager
 
 service keystore_auth /system/bin/keystore_auth
     user root
@@ -47,16 +49,25 @@ service keystore /system/bin/keystore /tmp/misc/keystore
     group root drmrpc readproc
     disabled
     seclabel u:r:recovery:s0
-
-on boot
-    chmod 0777 /system/bin/unified-script.sh
-    start unified-script
-    
+     
 service unified-script /system/bin/unified-script.sh
     user root
     group root
     disabled
     oneshot
+    seclabel u:r:recovery:s0
+
+service hwservicemanager /system/bin/hwservicemanager
+    user root
+    group root
+    disabled
+    onrestart setprop hwservicemanager.ready false
+    seclabel u:r:recovery:s0
+
+service servicemanager /system/bin/servicemanager
+    user root
+    group root readproc
+    disabled
     seclabel u:r:recovery:s0
     
 service gatekeeper-1-0 /system/bin/android.hardware.gatekeeper@1.0-service-qti
@@ -69,31 +80,32 @@ service gatekeeper-1-0 /system/bin/android.hardware.gatekeeper@1.0-service-qti
 service keymaster-4-0 /system/bin/android.hardware.keymaster@4.0-service-qti
     user root
     group root
-    setenv LD_LIBRARY_PATH /vendor/lib64
+    setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib64/hw:/system/lib64
     disabled
     seclabel u:r:recovery:s0
     
 service qseecomd /system/bin/qseecomd
     user root
     group root
-    setenv LD_LIBRARY_PATH /vendor/lib64
+    setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib64/hw:/system/lib64
     shutdown critical
+    disabled
     seclabel u:r:recovery:s0
-    
+
 on property:crypto.ready=0
     stop qseecomd
     stop keymaster-4-0
     stop gatekeeper-1-0
     stop servicemanager
-
+     
 on property:crypto.ready=1
     start qseecomd
 
 on property:vendor.sys.listeners.registered=true
     start keymaster-4-0
     start gatekeeper-1-0
-
-on property:sys.usb.config=fastboot
     start servicemanager
-    start hwservicemanager
-    restart fastbootd
+    
+on boot
+    chmod 0777 /system/bin/unified-script.sh
+    start unified-script
