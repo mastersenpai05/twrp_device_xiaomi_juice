@@ -51,10 +51,8 @@ BOARD_KERNEL_CMDLINE := \
     video=vfb:640x400,bpp=32,memsize=3072000 \
     msm_rtb.filter=0x237 \
     service_locator.enable=1 \
-    swiotlb=2048 \
-    loop.max_part=7
+    swiotlb=2048
 
-BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 BOARD_KERNEL_CMDLINE += androidboot.init_fatal_reboot_target=recovery
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_OFFSET := 0x00008000
@@ -66,7 +64,6 @@ BOARD_DTB_OFFSET := 0x01f00000
 
 BOARD_KERNEL_IMAGE_NAME := Image.gz
 BOARD_INCLUDE_RECOVERY_DTBO := true
-BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 BOARD_BOOT_HEADER_VERSION := 2
 
 TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtb
@@ -143,7 +140,6 @@ TARGET_RECOVERY_QCOM_RTC_FIX := true
 TW_EXCLUDE_DEFAULT_USB_INIT := true
 TW_EXTRA_LANGUAGES := true
 TW_INCLUDE_NTFS_3G := true
-TW_USE_TOOLBOX := true
 TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
 TW_MAX_BRIGHTNESS := 2047
