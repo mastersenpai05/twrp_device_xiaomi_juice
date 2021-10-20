@@ -24,83 +24,19 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+import /init.recovery.qcom_decrypt.rc
 
 on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
-    setprop crypto.ready 1
-    install_keyring
     start vold
 
-on init
-    wait /dev/qseecom
-    start vendor.qseecomd
-    start servicemanager
-    start hwservicemanager
-
-service keystore_auth /system/bin/keystore_auth
-    user root
-    group root
-    disabled
-    oneshot
-    seclabel u:r:recovery:s0
-
-# keystore is started and stopped on demand by TWRP
-service keystore /system/bin/keystore /tmp/misc/keystore
-    user root
-    group root drmrpc readproc log
-    disabled
-    seclabel u:r:recovery:s0
-     
 service unified-script /system/bin/unified-script.sh
     user root
     group root
     disabled
     oneshot
     seclabel u:r:recovery:s0
-    
-service gatekeeper-1-0 /system/bin/android.hardware.gatekeeper@1.0-service-qti
-    user root
-    group root
-    setenv LD_LIBRARY_PATH /vendor/lib64
-    disabled
-    oneshot
-    seclabel u:r:recovery:s0
-
-service keymaster-4-0 /system/bin/android.hardware.keymaster@4.0-service-qti
-    user root
-    group root
-    setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib64/hw:/system/lib64
-    disabled
-    oneshot
-    seclabel u:r:recovery:s0
-    
-service qseecomd /system/bin/qseecomd
-    user root
-    group root
-    setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib64/hw:/system/lib64
-    shutdown critical
-    oneshot
-    disabled
-    seclabel u:r:recovery:s0
-
-on property:crypto.ready=0
-    stop qseecomd
-    stop keymaster-4-0
-    stop gatekeeper-1-0
-    stop servicemanager
-
-on property:crypto.ready=1
-    start qseecomd
-
-on property:vendor.sys.listeners.registered=true
-    start keymaster-4-0
-    start gatekeeper-1-0
-
-on property:hwservicemanaer.ready=true
-    start keymaster-4-0
-    start gatekeeper-1-0
-    start qseecomd
 
 on boot
     chmod 0777 /system/bin/unified-script.sh
